@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WorkSearch.Models;
+using WorkSearch.ViewModels;
 
 namespace WorkSearch.Controllers
 {
