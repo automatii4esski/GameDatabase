@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WorkSearch.Models
 {
     [Table("user")]
-    public class User : IdentityUser<long>
+    public class User : IdentityUser<int>
     {
         [Column("id")]
         [PersonalData]
         [Key]
-        public override long Id { get; set; }
+        public override int Id { get; set; }
 
         [Column("name", TypeName = "VARCHAR(70)")]
         public string Name { get; set; }

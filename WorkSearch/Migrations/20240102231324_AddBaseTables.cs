@@ -19,11 +19,11 @@ namespace WorkSearch.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    Name = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    NormalizedName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -84,7 +84,7 @@ namespace WorkSearch.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClaimValue = table.Column<string>(type: "longtext", nullable: true)
@@ -106,7 +106,7 @@ namespace WorkSearch.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "VARCHAR(70)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -114,7 +114,7 @@ namespace WorkSearch.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     patronymic = table.Column<string>(type: "VARCHAR(70)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    email = table.Column<string>(type: "VARCHAR(256)", maxLength: 256, nullable: false)
+                    email = table.Column<string>(type: "VARCHAR(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     phone = table.Column<string>(type: "VARCHAR(15)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -123,11 +123,11 @@ namespace WorkSearch.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     gender_id = table.Column<byte>(type: "tinyint unsigned", nullable: true),
                     main_language_id = table.Column<short>(type: "smallint", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    UserName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    NormalizedUserName = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    NormalizedEmail = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: true)
@@ -164,7 +164,7 @@ namespace WorkSearch.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClaimValue = table.Column<string>(type: "longtext", nullable: true)
@@ -186,13 +186,13 @@ namespace WorkSearch.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(95)", nullable: false)
+                    LoginProvider = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderKey = table.Column<string>(type: "varchar(95)", nullable: false)
+                    ProviderKey = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProviderDisplayName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,8 +210,8 @@ namespace WorkSearch.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<int>(type: "int", maxLength: 127, nullable: false),
+                    RoleId = table.Column<int>(type: "int", maxLength: 127, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,10 +235,10 @@ namespace WorkSearch.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(95)", nullable: false)
+                    UserId = table.Column<int>(type: "int", maxLength: 127, nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(95)", nullable: false)
+                    Name = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Value = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<User> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +11,10 @@
     <link rel="stylesheet" href="~/WorkSearch.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @if (TempData["error"] != null)
+    {
+            <div class="alert">@TempData["error"]</div>
+    }
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -26,6 +32,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    @if(signInManager.IsSignedIn(User)){
+                        <div>
+                                        <form asp-controller="Account" asp-action="Logout">
+                                       <button type="submit" class="btn btn-danger">Logout</button>
+                                </form>
+                        </div>
+                    }
+                    else{
+                         <div>
+                                <a class="btn" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="btn" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

@@ -1,18 +1,108 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.info-row {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-row-title {
+    font-weight: bold;
+}
+
+.info-cell {
+    padding: 7px;
+    flex: 1 1 auto;
+}
+
+.info-cell-actions {
+    width: 10%;
+}
+
+.info-title {
+    text-align: center;
+    font-size: 46px;
+    margin-bottom: 30px;
+}
+
+.info-create {
+    padding: 10px;
+    background: green;
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+}
+
+.form {
+    margin: 0 auto;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+}
+
+
+@keyframes alert-show {
+    0% {
+        transform: translate(-50%, -100%);
+        top: 0;
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+        top: 15px;
+    }
+}
+
+@keyframes alert-hide {
+    0% {
+        transform: translate(-50%, 0);
+        top: 15px;
+    }
+
+    100% {
+        transform: translate(-50%, -100%);
+        top: 0;
+    }
+}
+
+.alert {
+    position: absolute;
+    padding: 15px;
+    background: red;
+    color: #fff;
+    left: 50%;
+    top: 0;
+    z-index: 10;
+    transform: translate(-50%, -100%);
+    animation: alert-show 0.7s forwards;
+}
+
+.alert-hide {
+    animation: alert-hide 0.7s forwards;
+}
+
+.fx-row {
+    display: flex;
+    align-items: center;
 }
