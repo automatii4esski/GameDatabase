@@ -1,0 +1,24 @@
+﻿@model WorkSearch.ViewModels.UserCompanies.IndexViewModel
+
+<h2 class="box">Ваши компании</h2>
+
+    <div class="box">
+        <a class="btn btn-primary" asp-action="Create">Зарегистрировать компанию</a>
+    </div>
+
+@if(Model.Companies.Count() == 0){
+    <h4 class="box">Нет компаний</h4>
+}else{
+
+    @foreach(var c in Model.Companies){
+        <div>
+            <h6>@c.Name</h6>
+                             <a class="btn btn-warning" asp-route-id="@c.Id" asp-area="" asp-action="Edit">Редактировать</a>
+                     <form asp-action="Delete">
+                         <input hidden value="@c.Id" name="id">
+                         <button type="submit" class="btn btn-danger">Delete</button>
+                     </form>
+        </div>
+    }
+
+}

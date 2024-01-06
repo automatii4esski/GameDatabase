@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkSearch.DBContext;
 
@@ -10,9 +11,11 @@ using WorkSearch.DBContext;
 namespace WorkSearch.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    partial class MyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240106140302_AddedEmployeeTables")]
+    partial class AddedEmployeeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,9 +195,6 @@ namespace WorkSearch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("company");
@@ -203,7 +203,6 @@ namespace WorkSearch.Migrations
             modelBuilder.Entity("WorkSearch.Models.Gender", b =>
                 {
                     b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint unsigned")
                         .HasColumnName("id");
 

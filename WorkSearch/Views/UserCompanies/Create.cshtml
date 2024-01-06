@@ -1,0 +1,29 @@
+﻿@model WorkSearch.ViewModels.UserCompanies.CreateViewModel;
+
+<h2>Регистрация компанию</h2>
+
+ <form class="form" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+             <div class="form-group">
+                <label asp-for="Company.Name" class="control-label">Название</label>
+                <input  asp-for="Company.Name" class="form-control" />
+                <span asp-validation-for="Company.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Company.PlaceOfResidence" class="control-label">Место главного офиса</label>
+                <input  asp-for="Company.PlaceOfResidence" class="form-control" />
+                <span asp-validation-for="Company.PlaceOfResidence" class="text-danger"></span>
+            </div>
+
+            <div style="margin-top:10px;" class="form-group box">
+                <input type="submit" value="Зарегистрировать" class="btn btn-success" />
+            </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

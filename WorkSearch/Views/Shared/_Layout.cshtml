@@ -33,8 +33,20 @@
                         </li>
                     </ul>
                     @if(signInManager.IsSignedIn(User)){
+                            <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserResumes" asp-action="Index">Мои резюме</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserCompanies" asp-action="Index">Мои компании</a>
+                            </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserSoleProprietor" asp-action="Index">Моё ИП</a>
+                                </li>
+                        </ul>
                         <div>
-                                        <form asp-controller="Account" asp-action="Logout">
+                                <form asp-controller="Account" asp-action="Logout">
                                        <button type="submit" class="btn btn-danger">Logout</button>
                                 </form>
                         </div>

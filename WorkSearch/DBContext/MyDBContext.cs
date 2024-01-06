@@ -10,6 +10,8 @@ namespace WorkSearch.DBContext
         public DbSet<Citizenship> Citizenships { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<SoleProprietor> SoleProprietors { get; set; }
 
         public MyDBContext(DbContextOptions<MyDBContext> options) : base(options) { }
 

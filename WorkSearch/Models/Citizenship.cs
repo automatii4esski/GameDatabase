@@ -7,7 +7,7 @@ namespace WorkSearch.Models
     public class Citizenship
     {
         [Column("id")]
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short Id { get; set; }
 
         [Column("name", TypeName = "VARCHAR(45)")]

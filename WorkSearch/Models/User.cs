@@ -9,7 +9,7 @@ namespace WorkSearch.Models
     {
         [Column("id")]
         [PersonalData]
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override int Id { get; set; }
 
         [Column("name", TypeName = "VARCHAR(70)")]

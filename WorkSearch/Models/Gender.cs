@@ -7,7 +7,7 @@ namespace WorkSearch.Models
     public class Gender
     {
         [Column("id")]
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public byte Id { get; set; }
 
         [Column("name", TypeName = "VARCHAR(15)")]
