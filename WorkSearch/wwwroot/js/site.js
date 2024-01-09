@@ -14,3 +14,5 @@ const hideAlert = function () {
 setTimeout(hideAlert, 5000)
 
 alertEl.addEventListener('click', hideAlert);
+
+

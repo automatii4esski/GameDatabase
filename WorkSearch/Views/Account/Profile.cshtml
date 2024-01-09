@@ -1,0 +1,50 @@
+﻿@model WorkSearch.ViewModels.Account.ProfileViewModel;
+@using WorkSearch.Helpers;
+
+<h2>Профиль</h2>
+
+<div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Имя- </div>
+        <div>@Model.User.Name</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Фамилия- </div>
+        <div>@Model.User.Surname</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Отчество- </div>
+        <div>@Model.User.Patronymic</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Дата рождения - </div>
+        <div> @Model.User.DateOfBirthUI.ToString() (@Model.User.Age лет)</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Место проживания - </div>
+        <div> @StringHelper.GetStringIfSpecified(Model.User.PlaceOfResidence)</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Email- </div>
+        <div>@Model.User.Email</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Телефон-</div>
+        <div>@StringHelper.GetStringIfSpecified(Model.User.PhoneNumber)</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Пол-</div>
+        <div>@StringHelper.GetStringIfSpecified(Model.User.Gender?.Name)</div>
+    </div>
+    <div style="display:flex;">
+        <div style="font-weight:bold;">Родной язык- </div>
+        <div>@StringHelper.GetStringIfSpecified(Model.User.MainLanguage?.Name)</div>
+    </div>
+</div>
+<a asp-route-id="@Model.User?.Id" asp-action="Edit">Редактировать данные</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

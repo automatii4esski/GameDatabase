@@ -7,14 +7,7 @@ namespace WorkSearch.Models
 {
     [Table("sole_proprietor")]
     [Index(nameof(UserId), IsUnique = true)]
-    public class SoleProprietor
+    public class SoleProprietor : Employer
     {
-        [Column("id")]
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Column("user_id")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
     }
 }

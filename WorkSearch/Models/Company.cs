@@ -7,20 +7,9 @@ namespace WorkSearch.Models
 {
     [Table("company")]
     [Index(nameof(Name), IsUnique = true)]
-    public class Company
+    public class Company : Employer
     {
-        [Column("id")]
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Column("name", TypeName = "VARCHAR(70)")]
-        public string Name { get; set; }
-
         [Column("place_of_residence", TypeName = "VARCHAR(70)")]
         public string PlaceOfResidence { get; set; }
-
-        [Column("user_id")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
     }
 }

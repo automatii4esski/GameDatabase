@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WorkSearch.Helpers;
+using WorkSearch.Helpers.Messages;
+using WorkSearch.Helpers.Validation;
 
 namespace WorkSearch.Models
 {
@@ -30,8 +33,16 @@ namespace WorkSearch.Models
         [ProtectedPersonalData]
         public override string? PhoneNumber { get; set; }
 
-        [Column("date_of_birth")]
-        public DateTime? DateOfBirth { get; set; }
+        [Column("date_of_birth", TypeName = "DATE")]
+        [MaxDate]
+        [MinAgeDate(16)]
+        public DateTime DateOfBirth { get; set; }
+
+        [NotMapped]
+        public DateOnly DateOfBirthUI { get => DateOnly.FromDateTime(DateOfBirth); }
+
+        [NotMapped]
+        public int Age { get => DateHelper.GetAge(DateOfBirth); }
 
         [Column("place_of_residence", TypeName = "VARCHAR(70)")]
         public string? PlaceOfResidence { get; set; }

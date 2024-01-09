@@ -10,6 +10,7 @@ namespace WorkSearch.DBContext
         public DbSet<Citizenship> Citizenships { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<Employer> Employers { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<SoleProprietor> SoleProprietors { get; set; }
 
@@ -46,6 +47,8 @@ namespace WorkSearch.DBContext
                 entity.Property(m => m.Name).HasMaxLength(127);
 
             });
+
+            modelBuilder.Entity<Employer>().UseTpcMappingStrategy();
         }
     }
 }

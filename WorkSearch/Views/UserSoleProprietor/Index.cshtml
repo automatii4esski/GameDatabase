@@ -1,0 +1,13 @@
+﻿@model WorkSearch.ViewModels.UserSoleProprietor.IndexViewModel
+
+<h2 class="box">Ваше ИП</h2>
+
+@if(Model.SoleProprietor == null){
+    <h4 class="box">У вас нет ИП</h4>
+            <div class="box">
+            <a class="btn btn-primary" asp-action="Create">Зарегистрировать ИП</a>
+        </div>
+}else{
+    <h4>@Model.SoleProprietorName</h4>
+     <p>@Model.SoleProprietor.User.PlaceOfResidence</p>   
+}

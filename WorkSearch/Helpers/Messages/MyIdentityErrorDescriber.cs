@@ -11,7 +11,7 @@ namespace WorkSearch.Helpers.Messages
             return new IdentityError
             {
                 Code = nameof(DuplicateEmail),
-                Description = string.Format(IdentityErrorMessages.DuplicateEmail, email)
+                Description = string.Format(ErrorMessages.DuplicateEmail, email)
             };
         }
     }
