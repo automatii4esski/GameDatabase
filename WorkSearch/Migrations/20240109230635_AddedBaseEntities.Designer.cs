@@ -11,8 +11,8 @@ using WorkSearch.DBContext;
 namespace WorkSearch.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20240106190733_SetCompanyNameAsUnique")]
-    partial class SetCompanyNameAsUnique
+    [Migration("20240109230635_AddedBaseEntities")]
+    partial class AddedBaseEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,35 +172,29 @@ namespace WorkSearch.Migrations
                     b.ToTable("citizenship");
                 });
 
-            modelBuilder.Entity("WorkSearch.Models.Company", b =>
+            modelBuilder.Entity("WorkSearch.Models.Employer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(70)")
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)")
                         .HasColumnName("name");
-
-                    b.Property<string>("PlaceOfResidence")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(70)")
-                        .HasColumnName("place_of_residence");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.ToTable((string)null);
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("company");
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("WorkSearch.Models.Gender", b =>
@@ -237,24 +231,6 @@ namespace WorkSearch.Migrations
                     b.ToTable("language");
                 });
 
-            modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("sole_proprietor");
-                });
-
             modelBuilder.Entity("WorkSearch.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -269,8 +245,8 @@ namespace WorkSearch.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("DATE")
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("Email")
@@ -359,6 +335,41 @@ namespace WorkSearch.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WorkSearch.Models.Company", b =>
+                {
+                    b.HasBaseType("WorkSearch.Models.Employer");
+
+                    b.Property<string>("PlaceOfResidence")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(70)")
+                        .HasColumnName("place_of_residence");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("company");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
+                {
+                    b.HasBaseType("WorkSearch.Models.Employer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("sole_proprietor");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -410,6 +421,21 @@ namespace WorkSearch.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorkSearch.Models.User", b =>
+                {
+                    b.HasOne("WorkSearch.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId");
+
+                    b.HasOne("WorkSearch.Models.Language", "MainLanguage")
+                        .WithMany()
+                        .HasForeignKey("MainLanguageId");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("MainLanguage");
+                });
+
             modelBuilder.Entity("WorkSearch.Models.Company", b =>
                 {
                     b.HasOne("WorkSearch.Models.User", "User")
@@ -430,21 +456,6 @@ namespace WorkSearch.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WorkSearch.Models.User", b =>
-                {
-                    b.HasOne("WorkSearch.Models.Gender", "Gender")
-                        .WithMany()
-                        .HasForeignKey("GenderId");
-
-                    b.HasOne("WorkSearch.Models.Language", "MainLanguage")
-                        .WithMany()
-                        .HasForeignKey("MainLanguageId");
-
-                    b.Navigation("Gender");
-
-                    b.Navigation("MainLanguage");
                 });
 #pragma warning restore 612, 618
         }

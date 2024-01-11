@@ -1,0 +1,31 @@
+﻿@model WorkSearch.ViewModels.UserCompanies.ChangePhotoViewModel;
+
+<h2>Сменить фото</h2>
+
+ <form class="form" enctype="multipart/form-data" asp-action="ChangePhoto">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label">Фото</label>
+                <input  asp-for="Photo" class="photo-input form-control" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+
+            <div style="margin-top:10px;" class="form-group box">
+                <input type="submit" value="Изменить" class="btn btn-success" />
+            </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script>
+                $(document).ready(function(){
+                    const fileName = $(this).val().split("\\").pop();
+                    $(this).next('.photo-input').html(fileName);
+                })
+        </script>
+    }
+    }

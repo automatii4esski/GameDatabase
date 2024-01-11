@@ -6,17 +6,17 @@ namespace WorkSearch.Models
     public abstract class Employer
     {
         [Column("id")]
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
 
-        [Column("name", TypeName = "VARCHAR(250)")]
+        [Column("name")]
+        [MaxLength(255)]
         public string Name { get; set; }
 
         [Column("description", TypeName = "TEXT")]
         public string Description { get; set; }
 
-        [Column("user_id")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        [Column("photo_url")]
+        public string? PhotoUrl { get; set; }
     }
 }

@@ -162,11 +162,17 @@ namespace WorkSearch.Controllers
                 if (userId == null) throw new Exception(ErrorMessages.UserNotFound);
 
                 var user = _dbContext.Users.First(u => u.Id == int.Parse(userId));
+                var soleProprietor = _dbContext.SoleProprietors.FirstOrDefault(s => s.UserId == int.Parse(userId));
 
                 UpdateUserFields(user, viewModel.User);
 
-                var result = await _userManager.UpdateAsync(user);
+                if(soleProprietor != null)
+                {
+                    soleProprietor.Name = StringHelper.GetSoleProprietorName(user);
+                    _dbContext.SoleProprietors.Update(soleProprietor);
+                }
 
+                var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded) return RedirectToAction(nameof(Profile));
 
                 foreach (var error in result.Errors)

@@ -1,0 +1,29 @@
+﻿@model WorkSearch.ViewModels.UserCompanies.DetailsViewModel
+@using WorkSearch.Helpers;
+
+<div style="display:flex; align-items:center;">
+    <img asp-append-version="true" src="@StringHelper.GetPhotoPath(@Model.Company.PhotoUrl)" width="150" height="200">
+    <h2 style="margin-left:10px;">@Model.Company.Name</h2>
+</div>
+
+<div style="display:flex;"> <a class="btn btn-warning" asp-route-id="@Model.Company.Id" asp-area="" asp-action="ChangePhoto">Изменить фото</a>
+                                    <form asp-action="DeletePhoto">
+                                         <input hidden value="@Model.Company.PhotoUrl" name="photoName">
+                                                 <input hidden value="@Model.Company.Id" name="id">
+                                         <button type="submit" class="btn btn-danger">Удалить фото</button>
+                                     </form> 
+                                     </div>
+
+<p>Офис - @Model.Company.Description</p>
+
+<p>Описание - @Model.Company.Description</p>
+
+<div style="display:flex;"> 
+    <a class="btn btn-warning" asp-route-id="@Model.Company.Id" asp-area="" asp-action="Edit">Редактировать</a>
+                                     <form asp-action="Delete">
+                                         <input hidden value="@Model.Company.Id" name="id">
+                                         <input hidden value="@Model.Company.PhotoUrl" name="PhotoUrl">
+                                         <button type="submit" class="btn btn-danger">Удалить</button>
+                                     </form>
+</div>
+                                    

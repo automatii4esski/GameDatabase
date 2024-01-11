@@ -9,5 +9,8 @@ namespace WorkSearch.Models
     [Index(nameof(UserId), IsUnique = true)]
     public class SoleProprietor : Employer
     {
+        [Column("user_id")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -171,9 +171,9 @@ namespace WorkSearch.Migrations
 
             modelBuilder.Entity("WorkSearch.Models.Employer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("char(36)")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
@@ -183,17 +183,15 @@ namespace WorkSearch.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(250)")
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)")
                         .HasColumnName("name");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("longtext")
+                        .HasColumnName("photo_url");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable((string)null);
 
@@ -338,6 +336,24 @@ namespace WorkSearch.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WorkSearch.Models.Vacancy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("EmployerId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("employer_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployerId");
+
+                    b.ToTable("vacancy");
+                });
+
             modelBuilder.Entity("WorkSearch.Models.Company", b =>
                 {
                     b.HasBaseType("WorkSearch.Models.Employer");
@@ -347,8 +363,14 @@ namespace WorkSearch.Migrations
                         .HasColumnType("VARCHAR(70)")
                         .HasColumnName("place_of_residence");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("company");
                 });
@@ -356,6 +378,13 @@ namespace WorkSearch.Migrations
             modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
                 {
                     b.HasBaseType("WorkSearch.Models.Employer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("sole_proprietor");
                 });
@@ -411,17 +440,6 @@ namespace WorkSearch.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkSearch.Models.Employer", b =>
-                {
-                    b.HasOne("WorkSearch.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WorkSearch.Models.User", b =>
                 {
                     b.HasOne("WorkSearch.Models.Gender", "Gender")
@@ -435,6 +453,39 @@ namespace WorkSearch.Migrations
                     b.Navigation("Gender");
 
                     b.Navigation("MainLanguage");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.Vacancy", b =>
+                {
+                    b.HasOne("WorkSearch.Models.Employer", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.Company", b =>
+                {
+                    b.HasOne("WorkSearch.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
+                {
+                    b.HasOne("WorkSearch.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

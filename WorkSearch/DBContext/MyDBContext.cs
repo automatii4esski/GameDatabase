@@ -13,6 +13,7 @@ namespace WorkSearch.DBContext
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<SoleProprietor> SoleProprietors { get; set; }
+        public DbSet<Vacancy> Vacancies { get; set; }
 
         public MyDBContext(DbContextOptions<MyDBContext> options) : base(options) { }
 
@@ -46,6 +47,11 @@ namespace WorkSearch.DBContext
                 entity.Property(m => m.LoginProvider).HasMaxLength(127);
                 entity.Property(m => m.Name).HasMaxLength(127);
 
+            });
+
+            modelBuilder.Entity<Employer>(entity =>
+            {
+                entity.Property(m => m.Name).HasMaxLength(127);
             });
 
             modelBuilder.Entity<Employer>().UseTpcMappingStrategy();

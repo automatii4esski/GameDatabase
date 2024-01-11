@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WorkSearch.Migrations
 {
     /// <inheritdoc />
-    public partial class AddBaseTables : Migration
+    public partial class AddedBaseEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,7 +53,8 @@ namespace WorkSearch.Migrations
                 name: "gender",
                 columns: table => new
                 {
-                    id = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    id = table.Column<byte>(type: "tinyint unsigned", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "VARCHAR(15)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -118,7 +119,7 @@ namespace WorkSearch.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     phone = table.Column<string>(type: "VARCHAR(15)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    date_of_birth = table.Column<DateTime>(type: "datetime", nullable: true),
+                    date_of_birth = table.Column<DateTime>(type: "DATE", nullable: false),
                     place_of_residence = table.Column<string>(type: "VARCHAR(70)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     gender_id = table.Column<byte>(type: "tinyint unsigned", nullable: true),
@@ -255,6 +256,54 @@ namespace WorkSearch.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "company",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false),
+                    name = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    description = table.Column<string>(type: "TEXT", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    place_of_residence = table.Column<string>(type: "VARCHAR(70)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    user_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_company", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_company_AspNetUsers_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "sole_proprietor",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false),
+                    name = table.Column<string>(type: "varchar(127)", maxLength: 127, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    description = table.Column<string>(type: "TEXT", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    user_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_sole_proprietor", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_sole_proprietor_AspNetUsers_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -301,6 +350,23 @@ namespace WorkSearch.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_company_name",
+                table: "company",
+                column: "name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_company_user_id",
+                table: "company",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_sole_proprietor_user_id",
+                table: "sole_proprietor",
+                column: "user_id",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -323,6 +389,12 @@ namespace WorkSearch.Migrations
 
             migrationBuilder.DropTable(
                 name: "citizenship");
+
+            migrationBuilder.DropTable(
+                name: "company");
+
+            migrationBuilder.DropTable(
+                name: "sole_proprietor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

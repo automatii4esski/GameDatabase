@@ -1,0 +1,22 @@
+﻿@model WorkSearch.ViewModels.UserSoleProprietor.EditViewModel;
+
+<h2>Редактирование ИП</h2>
+
+ <form class="form" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input hidden asp-for="SoleProprietor.Id" />
+            <input hidden asp-for="SoleProprietor.UserId" />
+            <input hidden asp-for="SoleProprietor.PhotoUrl" />
+
+            <div class="form-group">
+                <label asp-for="SoleProprietor.Description" class="control-label">Описание</label>
+                <textarea  asp-for="SoleProprietor.Description" class="form-control" >
+                    </textarea>
+                <span asp-validation-for="SoleProprietor.Description" class="text-danger"></span>
+            </div>
+
+            <div style="margin-top:10px;" class="form-group box">
+                <input type="submit" value="Редактировать" class="btn btn-success" />
+            </div>
+</form>

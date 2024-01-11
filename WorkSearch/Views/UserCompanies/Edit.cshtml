@@ -1,11 +1,12 @@
 ﻿@model WorkSearch.ViewModels.UserCompanies.EditViewModel;
 
-<h2>редактирование  компанию</h2>
+<h2>Редактирование  компанию</h2>
 
  <form class="form" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input hidden asp-for="Company.Id" />
             <input hidden asp-for="Company.UserId" />
+            <input hidden asp-for="Company.PhotoUrl" />
 
              <div class="form-group">
                 <label asp-for="Company.Name" class="control-label">Название</label>
@@ -17,6 +18,13 @@
                 <label asp-for="Company.PlaceOfResidence" class="control-label">Место главного офиса</label>
                 <input  asp-for="Company.PlaceOfResidence" class="form-control" />
                 <span asp-validation-for="Company.PlaceOfResidence" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Company.Description" class="control-label">Описание</label>
+                 <textarea  asp-for="Company.Description" class="form-control" >
+                    </textarea>
+                <span asp-validation-for="Company.Description" class="text-danger"></span>
             </div>
 
             <div style="margin-top:10px;" class="form-group box">

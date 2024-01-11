@@ -1,4 +1,5 @@
 ﻿@model WorkSearch.ViewModels.UserSoleProprietor.IndexViewModel
+@using WorkSearch.Helpers;
 
 <h2 class="box">Ваше ИП</h2>
 
@@ -8,6 +9,24 @@
             <a class="btn btn-primary" asp-action="Create">Зарегистрировать ИП</a>
         </div>
 }else{
-    <h4>@Model.SoleProprietorName</h4>
-     <p>@Model.SoleProprietor.User.PlaceOfResidence</p>   
+    <div style="display:flex; align-items:center;">
+            <img asp-append-version="true" src="@StringHelper.GetPhotoPath(Model.SoleProprietor.PhotoUrl)" width="200" height="270">
+            <h4 style="margin-left:10px;">@Model.SoleProprietor.Name</h4>
+    </div>
+        <div style="display:flex;"> <a class="btn btn-warning" asp-route-id="@Model.SoleProprietor.Id" asp-area="" asp-action="ChangePhoto">Изменить фото</a>
+                                        <form asp-action="DeletePhoto">
+                                                 <input hidden value="@Model.SoleProprietor.PhotoUrl" name="photoName">
+                                                         <input hidden value="@Model.SoleProprietor.Id" name="id">
+                                             <button type="submit" class="btn btn-danger">Удалить фото</button>
+                                         </form> 
+                                         </div>
+    <p>Описание - @Model.SoleProprietor.Description</p>
+        <div style="display:flex;"> 
+        <a class="btn btn-warning" asp-route-id="@Model.SoleProprietor.Id" asp-area="" asp-action="Edit">Редактировать</a>
+                                         <form asp-action="Delete">
+                                                 <input hidden value="@Model.SoleProprietor.Id" name="id">
+                                                 <input hidden value="@Model.SoleProprietor.PhotoUrl" name="photoUrl">
+                                             <button type="submit" class="btn btn-danger">Удалить</button>
+                                         </form>
+    </div>
 }

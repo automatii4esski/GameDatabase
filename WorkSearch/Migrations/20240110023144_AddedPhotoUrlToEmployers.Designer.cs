@@ -11,8 +11,8 @@ using WorkSearch.DBContext;
 namespace WorkSearch.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20240102231324_AddBaseTables")]
-    partial class AddBaseTables
+    [Migration("20240110023144_AddedPhotoUrlToEmployers")]
+    partial class AddedPhotoUrlToEmployers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,9 +172,39 @@ namespace WorkSearch.Migrations
                     b.ToTable("citizenship");
                 });
 
+            modelBuilder.Entity("WorkSearch.Models.Employer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("varchar(127)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("longtext")
+                        .HasColumnName("photo_url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable((string)null);
+
+                    b.UseTpcMappingStrategy();
+                });
+
             modelBuilder.Entity("WorkSearch.Models.Gender", b =>
                 {
                     b.Property<byte>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint unsigned")
                         .HasColumnName("id");
 
@@ -219,8 +249,8 @@ namespace WorkSearch.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("DATE")
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("Email")
@@ -309,6 +339,59 @@ namespace WorkSearch.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WorkSearch.Models.Vacancy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("EmployerId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("employer_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployerId");
+
+                    b.ToTable("vacancy");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.Company", b =>
+                {
+                    b.HasBaseType("WorkSearch.Models.Employer");
+
+                    b.Property<string>("PlaceOfResidence")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(70)")
+                        .HasColumnName("place_of_residence");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("company");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
+                {
+                    b.HasBaseType("WorkSearch.Models.Employer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("sole_proprietor");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -373,6 +456,39 @@ namespace WorkSearch.Migrations
                     b.Navigation("Gender");
 
                     b.Navigation("MainLanguage");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.Vacancy", b =>
+                {
+                    b.HasOne("WorkSearch.Models.Employer", "Employer")
+                        .WithMany()
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.Company", b =>
+                {
+                    b.HasOne("WorkSearch.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkSearch.Models.SoleProprietor", b =>
+                {
+                    b.HasOne("WorkSearch.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
